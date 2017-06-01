@@ -18,7 +18,7 @@ If using Mongo, download the `Prism-(version)-all.jar` file. Otherwise, download
 
 ## Installation
 
-1. Place into your `mods` directory. 
+1. Place into your `mods`or `mods\plugins` directory. 
 2. Ensure your Prism configuration file has the proper database connection details.
 
 ## Features
