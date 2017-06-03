@@ -23,8 +23,10 @@
  */
 package com.helion3.prism.events.listeners;
 
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
+import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 
 public class ClickInventoryListener {
@@ -34,10 +36,15 @@ public class ClickInventoryListener {
      * @param event Dispense event.
      */
     @Listener(order = Order.POST)
-    public void onInventoryClick(final ClickInventoryEvent event) {
-        System.out.println("ITEM: " + event.getCursorTransaction().getOriginal().getType().getName());
-        System.out.println("FINAL: " + event.getCursorTransaction().getFinal().getType().getName());
+    public void onInventoryClick(final ClickInventoryEvent event, @Root Player player) {
+        
+
+/*        System.out.println("ITEM: " + event.getCursorTransaction().getOriginal().getType().getName());
+        System.out.println("FINAL: " + event.getCursorTransaction().getFinal().getType().getName());*/
 //        System.out.println("INV: " + event.getTargetInventory().);
 //        event.getCursorTransaction()
+
+
+
     }
 }

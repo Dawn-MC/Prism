@@ -46,6 +46,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.helion3.prism.Prism;
 import com.helion3.prism.queues.RecordingQueue;
 import com.helion3.prism.util.DataQueries;
+import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
 /**
  * An easy-to-understand factory class for Prism records.
@@ -134,7 +136,7 @@ public class PrismRecord {
     public static class PrismRecordEventBuilder {
         protected final PrismRecordSourceBuilder source;
         protected String eventName;
-        protected DataContainer data = new MemoryDataContainer();
+        protected DataContainer data = DataContainer.createNew();
 
         private PrismRecordEventBuilder(PrismRecordSourceBuilder source) {
             this.source = source;
@@ -214,6 +216,12 @@ public class PrismRecord {
         public PrismRecord pickedUp(Entity entity) {
             this.eventName = "picked up";
             writeItem((Item) entity);
+            return new PrismRecord(source, this);
+        }
+
+        public PrismRecord itemUsed(ItemStackSnapshot itemStackSnapshot){
+            this.eventName = "item interaction";
+            writeItemStack(itemStackSnapshot);
             return new PrismRecord(source, this);
         }
 
@@ -324,6 +332,22 @@ public class PrismRecord {
                 itemId = optionalItem.get().getString(DataQuery.of("id")).orElse("item");
                 itemQty = optionalItem.get().getInt(DataQuery.of("Count")).orElse(1);
             }
+
+            data.set(DataQueries.Target, itemId);
+            data.set(DataQueries.Quantity, itemQty);
+        }
+
+
+        /**
+         * Helper method for formatting itemstack container data.
+         *
+         * @param item
+         */
+        private void writeItemStack(ItemStackSnapshot item) {
+            checkNotNull(item);
+
+            String itemId = item.getType().getId();
+            int itemQty = item.getCount();
 
             data.set(DataQueries.Target, itemId);
             data.set(DataQueries.Quantity, itemQty);
