@@ -7,6 +7,7 @@ plugins {
     id 'checkstyle'
     id 'com.github.hierynomus.license' version '0.13.0'
     id 'com.github.johnrengelman.shadow' version '1.2.4'
+    id "com.qixalite.spongestart" version "1.6.0"
 }
 
 def getVersionName = { ->
@@ -43,6 +44,13 @@ repositories {
         name 'Sponge Maven Repository'
         url 'https://repo.spongepowered.org/maven'
     }
+}
+
+spongestart{
+    eula true
+
+    forgeServerFolder 'run/forge'
+    vanillaServerFolder 'run/vanilla'
 }
 
 // Project dependencies
